@@ -5,9 +5,8 @@
 void circle(float x, float y, float r) {
 	glBegin(GL_TRIANGLE_FAN);
 	glVertex2f(x, y);
-	for (double d = 0; d <= 6.5/* 2*PI */; d+=0.1)
-		glVertex2f(x + (r * cos(d)),
-				   y + (r * sin(d)));
+	for (double d = 0; d <= 6.5 /* 2*PI */; d += 0.1)
+		glVertex2f(x + (r * cos(d)), y + (r * sin(d)));
 
 	glEnd();
 }
@@ -18,7 +17,7 @@ int main(int argc, char *argv[]) {
 	glutInitDisplayMode(/*GLUT_DEPTH | GLUT_DOUBLE |*/ GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(500, 500);
-	glutCreateWindow("ATOM(NO)");
+	glutCreateWindow("ATOM simple");
 
 	glutDisplayFunc([]() {}); // empty lambda, do nothing
 	double t = 0;
@@ -27,16 +26,16 @@ int main(int argc, char *argv[]) {
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
 		glColor3f(1, 1, 0);
-		circle(0, 0, 0.1);//sun
+		circle(0, 0, 0.1); // core
 		glColor3f(0, 0, 1);
-		for(int i=2;i<10;i++)
-			circle(cos(t/i)*0.1*i, sin(t/i)*0.1*i, 0.05);
+		for (int i = 2; i < 10; i++)
+			circle(cos(t / i) * 0.1 * i, sin(t / i) * 0.1 * i, 0.05);
 		glFlush();
-		//glutSwapBuffers();
-		t+=0.01;
+		// glutSwapBuffers();
+		t += 0.1;
 		glutMainLoopEvent(); // process system events(window move, resize,
 							 // redraw, etc)
-		usleep(100);
+		usleep(1000);
 	}
 
 	return 0;
