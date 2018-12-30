@@ -20,6 +20,8 @@ int main(int argc, char *argv[]) {
 	glutCreateWindow("ATOM simple");
 
 	glutDisplayFunc([]() {}); // empty lambda, do nothing
+	glutKeyboardFunc([](unsigned char, int, int) { exit(0); });
+
 	double t = 0;
 	while (1) {
 		glClear(GL_COLOR_BUFFER_BIT /*| GL_DEPTH_BUFFER_BIT*/);

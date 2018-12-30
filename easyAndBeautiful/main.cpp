@@ -64,6 +64,7 @@ int main(int argc, char *argv[]) {
 	glEnable(GL_DEPTH_TEST);
 
 	glutDisplayFunc([]() {}); // empty lambda, do nothing
+	glutKeyboardFunc([](unsigned char, int, int) { exit(0); });
 
 	double t = 0;
 	while (1) {
