@@ -17,7 +17,7 @@ int main(int argc, char *argv[]) {
 	glutInitDisplayMode(/*GLUT_DEPTH | GLUT_DOUBLE |*/ GLUT_RGBA);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(500, 500);
-	glutCreateWindow("ATOM simple");
+	glutCreateWindow("ATOM simple. press anykey to exit");
 
 	glutDisplayFunc([]() {}); // empty lambda, do nothing
 	glutKeyboardFunc([](unsigned char, int, int) { exit(0); });

@@ -55,7 +55,7 @@ int main(int argc, char *argv[]) {
 	glutInitDisplayMode(GLUT_DEPTH | GLUT_RGBA | GLUT_MULTISAMPLE);
 	glutInitWindowPosition(100, 100);
 	glutInitWindowSize(500, 500);
-	glutCreateWindow("ATOM simple and nice");
+	glutCreateWindow("ATOM simple and nice. press anykey to exit");
 
 	glEnable(GL_MULTISAMPLE);
 	glEnable(GL_BLEND);
