@@ -1,4 +1,5 @@
 #include <GL/freeglut.h>
+#include <algorithm>
 #include <cmath>
 #include <unistd.h>
 
@@ -36,9 +37,9 @@ void core(double r) {
 
 void electron(double x, double y, double r, int n = 0) {
 	glBegin(GL_TRIANGLE_FAN);
-	glColor4f(1, 1, 1, 1 - n / 100.);
+	glColor4f(1, 1, 1, std::max(1. - n / 50. - (n ? 0.4 : 0.), 0.));
 	glVertex2f(x, y);
-	glColor4f(0, 0, 1, 0.5 - n / 100.);
+	glColor4f(0, 0, 1, std::max(0.5 - n / 50. - (n ? 0.4 : 0.), 0.));
 	for (double d = -0.1; d <= 2 * M_PI; d += 0.1)
 		glVertex2f(x + (r * cos(d)), y + (r * sin(d)));
 	glEnd();
@@ -64,7 +65,6 @@ int main(int argc, char *argv[]) {
 	glEnable(GL_BLEND);
 	glBlendEquation(GL_FUNC_ADD);
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-	glEnable(GL_DEPTH_TEST);
 
 	glutDisplayFunc([]() {}); // empty lambda, do nothing
 	glutKeyboardFunc([](unsigned char, int, int) { exit(0); });
@@ -75,12 +75,14 @@ int main(int argc, char *argv[]) {
 		glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity();
 		glRotatef(t * 30, 0, 0, 1);
+		glEnable(GL_DEPTH_TEST);
 		core(0.1);
+		glDisable(GL_DEPTH_TEST);
 		glRotatef(t * 30, 0, 0, -1);
 		glRotatef(-t * 30, 0, 0, 1);
 
 		for (int j = 0; j < 5; j++) {
-			for (int i = 0; i < 50; i++) {
+			for (int i = 50; i >= 0; i--) {
 				electron(sin(t - i / 50. + 1.15 + j * (3.14 / 5)) * 0.5,
 						 cos(t - i / 50. - 1.15 + j * (3.14 / 5)) * 0.5, 0.05,
 						 i);
