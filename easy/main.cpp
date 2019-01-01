@@ -1,6 +1,7 @@
 #include <GL/freeglut.h>
+#include <chrono>
 #include <cmath>
-#include <unistd.h>
+#include <thread>
 
 void circle(float x, float y, float r) {
 	glBegin(GL_TRIANGLE_FAN);
@@ -37,7 +38,7 @@ int main(int argc, char *argv[]) {
 		t += 0.1;
 		glutMainLoopEvent(); // process system events(window move, resize,
 							 // redraw, etc)
-		usleep(1000);
+		std::this_thread::sleep_for(std::chrono::milliseconds(1));
 	}
 
 	return 0;

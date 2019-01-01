@@ -1,6 +1,6 @@
 #include <GL/freeglut.h>
 #include <cmath>
-#include <unistd.h>
+#include <thread>
 
 void adron(double x, double y, double r, int type) {
 	glColor4f(1, 1, 1, 1);
@@ -78,7 +78,7 @@ int main(int argc, char *argv[]) {
 		t += 0.1;
 		glutMainLoopEvent(); // process system events(window move, resize,
 							 // redraw, etc)
-		usleep(5000);
+		std::this_thread::sleep_for(std::chrono::milliseconds(5));
 	}
 
 	return 0;
