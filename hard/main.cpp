@@ -4,8 +4,9 @@
 #include <thread>
 
 #define getOrbitCoord(t, n)                                                    \
-	sin(t + n * (3.14 / 5)) * 3, cos(t + n * (3.14 / 5)) * 3,                  \
-		sin(t + n * (3.14 / 5)) * 3
+	float(sin(t + n * (3.14 / 5)) * 3), float(cos(t + n * (3.14 / 5)) * 3),    \
+		float(sin(t + n * (3.14 / 5)) * 3)
+#define MAKEFLOAT(a, b, c) float(a), float(b), float(c)
 
 void adron(double r, int type) {
 	if (type)
@@ -109,10 +110,14 @@ int main(int argc, char *argv[]) {
 
 	GLfloat material_diffuse[] = {1.0, 1.0, 1.0, 1.0};			   // as default
 	glMaterialfv(GL_FRONT_AND_BACK, GL_DIFFUSE, material_diffuse); // as default
-	GLfloat light0_diffuse[] = {1., 1., 1.};					   // as default
-	GLfloat light0_position[] = {0.0, 0.0, 0.0, 1.0};			   // as default
-	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);			   // as default
-	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);			   // as default
+	GLfloat light0_diffuse[] = {1., 1., 1.};
+	glLightfv(GL_LIGHT0, GL_DIFFUSE, light0_diffuse);
+	glLightfv(GL_LIGHT1, GL_DIFFUSE, light0_diffuse);
+
+	GLfloat light0_position[] = {0.0, 0.0, -10.0, 1.0};
+	GLfloat light1_position[] = {0.0, 0.0, 0.0, 1.0};
+	glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
+	glLightfv(GL_LIGHT1, GL_POSITION, light1_position);
 
 	glEnable(GL_LIGHT0);
 
@@ -125,6 +130,8 @@ int main(int argc, char *argv[]) {
 
 		electrons(t, 0);
 
+		glDisable(GL_LIGHT0);
+		glEnable(GL_LIGHT1);
 		glPushMatrix();
 		glRotatef(t * 300, 0, 1, 0);
 		glRotatef(t * 100, 0, 0, 1);
@@ -133,7 +140,9 @@ int main(int argc, char *argv[]) {
 		glRotatef(60, 0, 1, 0);
 		core(0.3, 0);
 		glPopMatrix();
+		glDisable(GL_LIGHT1);
 
+		glEnable(GL_LIGHT0);
 		electrons(t, 1);
 
 		glFlush();
