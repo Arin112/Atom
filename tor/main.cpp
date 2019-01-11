@@ -61,16 +61,32 @@ int main(int argc, char *argv[]) {
   glDisable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
 
+  double t = 0;
   while (1) {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glTranslatef(0, -2, -10);
+    glTranslatef(0, 0, -10);
     glRotatef(90, 1, 0, 0);
     glColor4f(1, 1, 1, 1);
-    glutSolidTorus(1, 2, 20, 20);
+    // glutSolidTorus(0.5, 1, 20, 20);
 
+    for (int i = 0; i < 4; i++) {
+      glPushMatrix();
+      glTranslatef(0, 0, (sin(t) * 2 * i / 2 + 2 + i * 2) * 0.5);
+      glutSolidTorus(0.5, 1 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
+      glPopMatrix();
+    }
+    glTranslatef(0, 0, 1.5);
+    for (int i = 1; i < 4; i++) {
+      glPushMatrix();
+      glTranslatef(0, 0, -(sin(t) * 2 * i / 2 + 2 + i * 2) * 0.5);
+      glutSolidTorus(0.5, 1 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
+      glPopMatrix();
+    }
+
+    t += 0.01;
     glFlush();
     glutMainLoopEvent();
     std::this_thread::sleep_for(std::chrono::milliseconds(1));
