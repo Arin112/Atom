@@ -56,14 +56,14 @@ int main(int argc, char *argv[]) {
     for (int i = 0; i < 5; i++) {
       glPushMatrix();
       glTranslatef(0, 0, (sin(t) * 2 * i / 2 + 4 + i * 2) * 0.3);
-      glutSolidTorus(0.3, 0.7 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
+      glutSolidTorus(0.3, 0.7 * (sin(t) * i / 2 + 2), 20, 20);
       glPopMatrix();
     }
     glTranslatef(0, 0, 2.5);
     for (int i = 1; i < 5; i++) {
       glPushMatrix();
       glTranslatef(0, 0, -(sin(t) * 2 * i / 2 + 4 + i * 2) * 0.3);
-      glutSolidTorus(0.3, 0.7 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
+      glutSolidTorus(0.3, 0.7 * (sin(t) * i / 2 + 2), 20, 20);
       glPopMatrix();
     }
 
