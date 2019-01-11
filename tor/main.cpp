@@ -5,21 +5,6 @@
 
 using namespace std;
 
-void circle(double x, double y, double r) {
-  glBegin(GL_TRIANGLE_FAN);
-  glVertex2f(x, y);
-  for (double d = -0.1; d <= 2 * M_PI; d += 0.1)
-    glVertex2f(x + (r * cos(d)), y + (r * sin(d)));
-  glEnd();
-}
-
-void ring(double x, double y, double r) {
-  glBegin(GL_LINE_LOOP);
-  for (double d = 0; d <= 2 * M_PI; d += 0.1)
-    glVertex2f(x + r * sin(d), y + r * cos(d));
-  glEnd();
-}
-
 int main(int argc, char *argv[]) {
   glutInit(&argc, argv);
   glutInitDisplayMode(GLUT_DEPTH | GLUT_RGBA | GLUT_MULTISAMPLE);
@@ -28,9 +13,6 @@ int main(int argc, char *argv[]) {
   glutCreateWindow("Some OpenGl window");
 
   glEnable(GL_MULTISAMPLE);
-  glEnable(GL_BLEND);
-  glBlendEquation(GL_FUNC_ADD);
-  glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 
   glutDisplayFunc([]() {}); // empty lambda, do nothing
   glutKeyboardFunc([](unsigned char, int, int) { exit(0); });
@@ -58,7 +40,6 @@ int main(int argc, char *argv[]) {
   glLightfv(GL_LIGHT0, GL_POSITION, light0_position);
 
   glEnable(GL_LIGHT0);
-  glDisable(GL_BLEND);
   glEnable(GL_DEPTH_TEST);
 
   double t = 0;
@@ -67,22 +48,22 @@ int main(int argc, char *argv[]) {
     glMatrixMode(GL_MODELVIEW);
     glLoadIdentity();
 
-    glTranslatef(0, 0, -10);
+    glTranslatef(0, 1, -10);
     glRotatef(90, 1, 0, 0);
     glColor4f(1, 1, 1, 1);
     // glutSolidTorus(0.5, 1, 20, 20);
 
-    for (int i = 0; i < 4; i++) {
+    for (int i = 0; i < 5; i++) {
       glPushMatrix();
-      glTranslatef(0, 0, (sin(t) * 2 * i / 2 + 2 + i * 2) * 0.5);
-      glutSolidTorus(0.5, 1 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
+      glTranslatef(0, 0, (sin(t) * 2 * i / 2 + 4 + i * 2) * 0.3);
+      glutSolidTorus(0.3, 0.7 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
       glPopMatrix();
     }
-    glTranslatef(0, 0, 1.5);
-    for (int i = 1; i < 4; i++) {
+    glTranslatef(0, 0, 2.5);
+    for (int i = 1; i < 5; i++) {
       glPushMatrix();
-      glTranslatef(0, 0, -(sin(t) * 2 * i / 2 + 2 + i * 2) * 0.5);
-      glutSolidTorus(0.5, 1 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
+      glTranslatef(0, 0, -(sin(t) * 2 * i / 2 + 4 + i * 2) * 0.3);
+      glutSolidTorus(0.3, 0.7 * (sin(t) * i / 2 + 2) - (i ? 0 : 0.5), 20, 20);
       glPopMatrix();
     }
 
