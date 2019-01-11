@@ -35,11 +35,13 @@ int main(int argc, char *argv[]) {
 
   glutDisplayFunc([]() {}); // empty lambda, do nothing
 
-  glutKeyboardFunc([](unsigned char, int, int) {
+  glutKeyboardFunc([](unsigned char ch, int, int) {
     if (s == 2)
       s = 1;
     else if (s == 3)
       s = 4;
+    if (ch == 'r')
+      s = 2;
   });
 
   double t = 0;
@@ -65,35 +67,37 @@ int main(int argc, char *argv[]) {
     glColor3f(0, 0, 1);
     circle(sin(t * 1.5 + 0.5) * 0.7, cos(t * 1.5 + 0.5) * 0.7, 0.07);
     if (s == 1) {
-      x += vx;
-      y += vy;
-      vx = 0.8 * vx - (x - sin(t) * 0.4) * 0.005;
-      vy = 0.8 * vy - (y - cos(t) * 0.4) * 0.005;
+      x += vx * 0.01;
+      y += vy * 0.01;
+      vx = 1.0 * vx - (x - sin(t) * 0.4) * 0.03;
+      vy = 1.0 * vy - (y - cos(t) * 0.4) * 0.03;
       if ((x - sin(t) * 0.4) * (x - sin(t) * 0.4) +
               (y - cos(t) * 0.4) * (y - cos(t) * 0.4) <
           0.02 * 0.02 + 0.1 * 0.1) {
         s = 3;
-      }
+      } else if (x * x + y * y < 0.1 * 0.1 + 0.02 * 0.02)
+        s = 2;
     } else if (s == 2) {
       x = sin(t * 1.5 + 0.5) * 0.7 + 0.07;
       y = cos(t * 1.5 + 0.5) * 0.7 + 0.07;
-      vx = 0.05;
-      vy = -0.05;
+      vx = 1.5 * cos(t * 1.5 + 0.5) * 0.7;
+      vy = -1.5 * sin(t * 1.5 + 0.5) * 0.7;
     } else if (s == 3) {
       x = sin(t) * 0.4 + 0.09;
       y = cos(t) * 0.4 + 0.09;
-      vx = 0.05;
-      vy = -0.05;
+      vx = cos(t) * 0.4;
+      vy = -sin(t) * 0.4;
     } else if (s == 4) {
-      x += vx;
-      y += vy;
-      vx = 0.8 * vx - (x - sin(t * 1.5 + 0.5) * 0.7) * 0.005;
-      vy = 0.8 * vy - (y - cos(t * 1.5 + 0.5) * 0.7) * 0.005;
+      x += vx * 0.01;
+      y += vy * 0.01;
+      vx = 1.0 * vx - (x - sin(t * 1.5 + 0.5) * 0.7) * 0.03;
+      vy = 1.0 * vy - (y - cos(t * 1.5 + 0.5) * 0.7) * 0.03;
       if ((x - sin(t * 1.5 + 0.5) * 0.7) * (x - sin(t * 1.5 + 0.5) * 0.7) +
               (y - cos(t * 1.5 + 0.5) * 0.7) * (y - cos(t * 1.5 + 0.5) * 0.7) <
           0.02 * 0.02 + 0.1 * 0.1) {
         s = 2;
-      }
+      } else if (x * x + y * y < 0.1 * 0.1 + 0.02 * 0.02)
+        s = 1;
     }
     glColor3f(0, 1, 1);
     circle(x, y, 0.02);
