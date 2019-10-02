@@ -83,8 +83,8 @@ int main(int argc, char *argv[]) {
 
 		for (int j = 0; j < 5; j++) {
 			for (int i = 50; i >= 0; i--) {
-				electron(sin(t - i / 50. + 1.15 ) * 0.65,
-						 cos(t - i / 50. - 1.15 ) * 0.65, 0.05,
+				electron(sin(t - i / 50. + 1.15 + j * (3.14 / 5)) * 0.65,
+						 cos(t - i / 50. - 1.15 + j * (3.14 / 5)) * 0.65, 0.05,
 						 i);
 			}
 			orbit(0, 0, 0.65);
